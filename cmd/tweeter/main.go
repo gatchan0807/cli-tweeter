@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/register"
 )
 
 func main() {
@@ -15,6 +16,15 @@ func main() {
 
 	app.Action = func(context *cli.Context) {
 		cli.ShowAppHelp(context)
+	}
+
+	app.Commands = []cli.Command{
+		{
+			Name:    "register",
+			Aliases: []string{"r"},
+			Usage:   "Register twitter account info.",
+			Action:  register.Register,
+		},
 	}
 
 	app.Run(os.Args)

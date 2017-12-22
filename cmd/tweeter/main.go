@@ -5,6 +5,7 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/register"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/tweet"
 )
 
 func main() {
@@ -24,6 +25,12 @@ func main() {
 			Aliases: []string{"r"},
 			Usage:   "Register twitter account info.",
 			Action:  register.Register,
+		},
+		{
+			Name:    "tweet",
+			Aliases: []string{"t"},
+			Usage:   "Tweet a contents",
+			Action:  tweet.Tweet,
 		},
 	}
 

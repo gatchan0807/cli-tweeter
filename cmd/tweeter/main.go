@@ -32,12 +32,17 @@ func main() {
 			Aliases: []string{"t"},
 			Usage:   "Tweet a contents",
 			Action:  tweet.Tweet,
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name: "account, a",
+				},
+			},
 		},
 		{
-			Name: "list",
+			Name:    "list",
 			Aliases: []string{"l"},
-			Usage: "List accounts information",
-			Action: list.List,
+			Usage:   "List accounts information",
+			Action:  list.List,
 		},
 	}
 

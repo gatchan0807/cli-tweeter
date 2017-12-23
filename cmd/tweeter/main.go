@@ -6,6 +6,7 @@ import (
 	"github.com/urfave/cli"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/register"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/tweet"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/list"
 )
 
 func main() {
@@ -31,6 +32,12 @@ func main() {
 			Aliases: []string{"t"},
 			Usage:   "Tweet a contents",
 			Action:  tweet.Tweet,
+		},
+		{
+			Name: "list",
+			Aliases: []string{"l"},
+			Usage: "List accounts information",
+			Action: list.List,
 		},
 	}
 

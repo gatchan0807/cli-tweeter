@@ -6,8 +6,6 @@ import (
 	"os"
 	"io/ioutil"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
-	"golang.org/x/crypto/ssh/terminal"
-	"syscall"
 )
 
 func Register(context *cli.Context) error {
@@ -18,8 +16,7 @@ func Register(context *cli.Context) error {
 	}
 
 	userName := getUserId()
-	userPassword := getPassword()
-	userAccountToken := getTwitterToken(userName, userPassword)
+	userAccountToken := getTwitterToken()
 
 	success := addToCsvFile(userName, userAccountToken)
 	if !success {
@@ -27,14 +24,6 @@ func Register(context *cli.Context) error {
 	}
 
 	return nil
-}
-
-func getPassword() string {
-	fmt.Println("Input yout Twitter account's Password.")
-	userPassword, err := terminal.ReadPassword(int(syscall.Stdin))
-
-	util.Check(err)
-	return string(userPassword)
 }
 
 func getUserId() string {
@@ -81,7 +70,7 @@ func addToCsvFile(accountName string, accountToken string) bool {
 	return true
 }
 
-func getTwitterToken(userAccountName string, userAccountPassword string) string {
+func getTwitterToken() string {
 	token := ""
 
 	return token

@@ -74,7 +74,7 @@ func addToCsvFile(accountName string, accountToken string) bool {
 		return false
 	}
 
-	writeLine := accountName + "," + accountToken
+	writeLine := accountName + "," + accountToken + "\n"
 
 	fmt.Fprint(file, writeLine)
 

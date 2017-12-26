@@ -18,7 +18,7 @@ func Register(context *cli.Context) error {
 		util.Check(err)
 	}
 
-	if isExist("ahaha") {
+	if isExist(context.Args().Get(0)) {
 		fmt.Println(context.Args().Get(0) + " is already exist.")
 	}
 

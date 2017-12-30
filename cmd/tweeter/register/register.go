@@ -27,14 +27,16 @@ func Register(context *cli.Context) error {
 	userAccountToken, userAccountSecret, userID := getTwitterToken()
 
 	if inputUserID != userID {
-		fmt.Println("Didn't match input the user ID and user ID authenticated.")
+		fmt.Println("入力されたIDと認証許可したIDが一致しませんでした。")
+		fmt.Println("(Didn't match input the user ID and user ID authenticated.)")
 
 		return nil
 	}
 
 	success := addToCsvFile(userID, userAccountToken, userAccountSecret)
 	if !success {
-		fmt.Println("Save failed")
+		fmt.Println("保存失敗しました。")
+		fmt.Println("(Save failed)")
 	}
 
 	return nil
@@ -42,13 +44,16 @@ func Register(context *cli.Context) error {
 
 func checkUserId() string {
 	var userAccountName string
-	fmt.Println("Input your Twitter account ID.(without '@')")
+	fmt.Println("@無しで登録したいTwitterIDを入力してください。")
+	fmt.Println("(Input your twitter account ID.(without '@'))")
 	fmt.Scan(&userAccountName)
 
 	for userAccountName == "" || isExist(userAccountName) {
 		if isExist(userAccountName) {
-			fmt.Println(userAccountName + " is already exist.")
-			fmt.Println("Input your Twitter account ID.(without '@') or If you want cancel then type ':q'.")
+			fmt.Println(userAccountName + "はすでに登録されています")
+			fmt.Println("(" + userAccountName + " is already exist.)")
+			fmt.Println("@無しで登録したいTwitterIDを入力してください。登録をキャンセルする場合は ':q' を入力してください。")
+			fmt.Println("(Input your Twitter account ID.(without '@') or If you want cancel then type ':q'.)")
 			fmt.Scan(&userAccountName)
 		}
 	}
@@ -102,14 +107,16 @@ func getTwitterToken() (token, secret, userID string) {
 
 	open.Run(url)
 
-	fmt.Println("Please push a button for authentication. After input visualized PIN.")
+	fmt.Println("「連携アプリを認証」ボタンを押した後、ブラウザに表示されたPINコードを入力してください。")
+	fmt.Println("(Please push a button for authentication. After input visualized PIN.)")
 
 	verificationCode := ""
 	fmt.Scanln(&verificationCode)
 
 	accessToken, err := consumer.AuthorizeToken(requestToken, verificationCode)
 	if err != nil {
-		fmt.Println("Authenticate faild.")
+		fmt.Println("認証失敗")
+		fmt.Println("(Authenticate faild.)")
 		log.Fatal(err)
 	}
 

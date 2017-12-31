@@ -7,13 +7,14 @@ import (
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
 )
 
+var accountListFilePath = "/tmp/tweeter/user_account.csv"
+
 func List(context *cli.Context) error {
 
-	fmt.Println("list")
-
-	data, err := ioutil.ReadFile("/tmp/tweeter/user_account.csv")
+	data, err := ioutil.ReadFile(accountListFilePath)
 	if err != nil {
 		fmt.Println("ユーザーのアカウントは登録されていませんでした。")
+		fmt.Println("(User account not found.)")
 		return nil
 	}
 

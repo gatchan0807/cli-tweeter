@@ -18,7 +18,7 @@ func List(context *cli.Context) error {
 		return nil
 	}
 
-	userIdList := util.ConvertToUserIdList(string(data))
+	userIdList := util.ConvertToIdList(string(data))
 
 	for _, element := range userIdList {
 		fmt.Println(element)

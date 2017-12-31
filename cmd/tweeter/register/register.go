@@ -67,7 +67,7 @@ func isExist(userId string) bool {
 	data, err := ioutil.ReadFile(accountListFilePath)
 	util.Check(err)
 
-	userIdList := util.ConvertToUserIdList(string(data))
+	userIdList := util.ConvertToIdList(string(data))
 
 	for _, element := range userIdList {
 		if element == userId {

@@ -11,21 +11,21 @@ import (
 	"log"
 )
 
+var accountListFilePath = "/tmp/tweeter/user_account.csv"
+
 func Register(context *cli.Context) error {
-	if _, err := os.Stat("/tmp/tweeter/user_account.csv"); os.IsNotExist(err) {
+	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)
-		_, err := os.Create("/tmp/tweeter/user_account.csv")
+		_, err := os.Create(accountListFilePath)
 		util.Check(err)
 	}
 
 	inputUserID := checkUserId()
-
 	if inputUserID == "cancel" {
 		return nil
 	}
 
 	userAccountToken, userAccountSecret, userID := getTwitterToken()
-
 	if inputUserID != userID {
 		fmt.Println("入力されたIDと認証許可したIDが一致しませんでした。")
 		fmt.Println("(Didn't match input the user ID and user ID authenticated.)")
@@ -48,14 +48,12 @@ func checkUserId() string {
 	fmt.Println("(Input your twitter account ID.(without '@'))")
 	fmt.Scan(&userAccountName)
 
-	for userAccountName == "" || isExist(userAccountName) {
-		if isExist(userAccountName) {
-			fmt.Println(userAccountName + "はすでに登録されています")
-			fmt.Println("(" + userAccountName + " is already exist.)")
-			fmt.Println("@無しで登録したいTwitterIDを入力してください。登録をキャンセルする場合は ':q' を入力してください。")
-			fmt.Println("(Input your Twitter account ID.(without '@') or If you want cancel then type ':q'.)")
-			fmt.Scan(&userAccountName)
-		}
+	for isExist(userAccountName) {
+		fmt.Println(userAccountName + "はすでに登録されています")
+		fmt.Println("(" + userAccountName + " is already exist.)")
+		fmt.Println("@無しで登録したいTwitterIDを入力してください。登録をキャンセルする場合は ':q' を入力してください。")
+		fmt.Println("(Input your Twitter account ID.(without '@') or If you want cancel then type ':q'.)")
+		fmt.Scan(&userAccountName)
 	}
 
 	if userAccountName == ":q" {
@@ -66,7 +64,7 @@ func checkUserId() string {
 }
 
 func isExist(userId string) bool {
-	data, err := ioutil.ReadFile("/tmp/tweeter/user_account.csv")
+	data, err := ioutil.ReadFile(accountListFilePath)
 	util.Check(err)
 
 	userIdList := util.ConvertToUserIdList(string(data))
@@ -80,7 +78,7 @@ func isExist(userId string) bool {
 }
 
 func addToCsvFile(accountName, accountToken, accountSecret string) bool {
-	file, err := os.OpenFile("/tmp/tweeter/user_account.csv", os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile(accountListFilePath, os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return false
 	}

@@ -11,10 +11,12 @@ import (
 
 var accountListFilePath = "/tmp/tweeter/user_account.csv"
 
+// This method needs for a tweet content to Twitter REST API.
+// All tweet request are sent to this method.
+// If request has account flag then request is forwarded tweetWithAccount method.
 func Tweet(context *cli.Context) error {
-
 	if context.String("account") != "" {
-		TweetWithAccount(context, context.String("account"))
+		tweetWithAccount(context, context.String("account"))
 		return nil
 	}
 
@@ -34,8 +36,9 @@ func Tweet(context *cli.Context) error {
 	return nil
 }
 
-func TweetWithAccount(context *cli.Context, accountId string) error {
-
+// This method needs for a tweet content and to tweet user account id.
+// This search selected user id from user account id list.
+func tweetWithAccount(context *cli.Context, accountId string) error {
 	data, err := ioutil.ReadFile(accountListFilePath)
 	if err != nil {
 		fmt.Println("ユーザーのアカウントは登録されていませんでした。")

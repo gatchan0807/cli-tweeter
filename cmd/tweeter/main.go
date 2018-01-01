@@ -16,9 +16,7 @@ func main() {
 	app.Usage = "first, register twitter account. second, let's tweet!"
 	app.Version = "0.0.1"
 
-	app.Action = func(context *cli.Context) {
-		cli.ShowAppHelp(context)
-	}
+	app.Action = tweet.Tweet
 
 	app.Commands = []cli.Command{
 		{

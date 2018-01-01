@@ -4,7 +4,6 @@ import (
 	"github.com/urfave/cli"
 	"fmt"
 	"os"
-	"io/ioutil"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
 	"github.com/mrjones/oauth"
 	"github.com/skratchdot/open-golang/open"
@@ -64,13 +63,10 @@ func checkUserId() string {
 }
 
 func isExist(userId string) bool {
-	data, err := ioutil.ReadFile(accountListFilePath)
-	util.Check(err)
-
-	userIdList := util.ConvertToIdList(string(data))
+	userIdList := util.GetUserInfoList()
 
 	for _, element := range userIdList {
-		if element == userId {
+		if element["userId"] == userId {
 			return true
 		}
 	}

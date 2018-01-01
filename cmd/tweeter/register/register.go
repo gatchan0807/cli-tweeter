@@ -1,18 +1,22 @@
 package register
 
 import (
-	"github.com/urfave/cli"
 	"fmt"
 	"os"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
 	"github.com/mrjones/oauth"
 	"github.com/skratchdot/open-golang/open"
 	"log"
+	"github.com/urfave/cli"
 )
 
 var accountListFilePath = "/tmp/tweeter/user_account.csv"
 
-func Register(context *cli.Context) error {
+// This method is for register Twitter account.
+// You call this method, then start user account authentication with interpreter.
+// And this open browser for to display Twitter OAuth PIN number.
+// This make a csv file to `/tmp/tweeter` directory for to save user information.
+func Register(_ *cli.Context) error {
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)
 		_, err := os.Create(accountListFilePath)

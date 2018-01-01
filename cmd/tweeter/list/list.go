@@ -1,12 +1,13 @@
 package list
 
 import (
-	"github.com/urfave/cli"
 	"fmt"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
+	"github.com/urfave/cli"
 )
 
-func List(context *cli.Context) error {
+// Display registered user ids.
+func List(_ *cli.Context) error {
 
 	userInfoList := util.GetUserInfoList()
 

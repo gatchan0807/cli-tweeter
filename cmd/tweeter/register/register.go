@@ -14,8 +14,8 @@ var accountListFilePath = "/tmp/tweeter/user_account.csv"
 
 // This method is for register Twitter account.
 // You call this method, then start user account authentication with interpreter.
-// And this open browser for to display Twitter OAuth PIN number.
-// This make a csv file to `/tmp/tweeter` directory for to save user information.
+// And this to open browser for displaying Twitter OAuth PIN number.
+// This method create a csv file at `/tmp/tweeter` directory to save user information.
 func Register(_ *cli.Context) error {
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)

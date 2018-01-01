@@ -2,7 +2,10 @@ package util
 
 import (
 	"strings"
+	"io/ioutil"
 )
+
+var accountListFilePath = "/tmp/tweeter/user_account.csv"
 
 func ConvertToIdList(rawData string) []string {
 	var result []string
@@ -17,10 +20,13 @@ func ConvertToIdList(rawData string) []string {
 	return result
 }
 
-func ConvertToInfoList(rawData string) []map[string]string {
-	result := []map[string]string{}
+func GetUserInfoList() []map[string]string {
+	var result []map[string]string
 
-	perLine := strings.Split(rawData, "\n")
+	rawData, err := ioutil.ReadFile(accountListFilePath)
+	Check(err)
+
+	perLine := strings.Split(string(rawData), "\n")
 	perLine = perLine[:len(perLine)-1] // 末尾削除
 
 	for _, element := range perLine {

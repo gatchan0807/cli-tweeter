@@ -45,12 +45,11 @@ func doTweet(tweetAccount map[string]string, tweetContents string) error {
 	api := anaconda.NewTwitterApi(tweetAccount["accessToken"], tweetAccount["accessSecret"])
 
 	tweet, err := api.PostTweet(tweetContents, nil)
-	fmt.Print("[Tweet by " + tweetAccount["userId"] + " Successed] ")
-	fmt.Println(tweet.Text)
-
-	if err != nil {
-		return err
-	} else {
+	if err == nil {
+		fmt.Print("[Tweet by " + tweetAccount["userId"] + " Successed] ")
+		fmt.Println(tweet.Text)
 		return nil
+	} else {
+		return err
 	}
 }

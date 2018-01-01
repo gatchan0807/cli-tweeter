@@ -36,10 +36,26 @@ func Tweet(context *cli.Context) error {
 
 func TweetWithAccount(context *cli.Context, accountId string) error {
 
-	fmt.Println("tweet with account")
-	fmt.Println(accountId)
+	data, err := ioutil.ReadFile(accountListFilePath)
+	if err != nil {
+		fmt.Println("ユーザーのアカウントは登録されていませんでした。")
+		fmt.Println("(User account not found.)")
+		return nil
+	}
 
-	fmt.Println(context.Args().Get(0))
+	userInfoList := util.ConvertToInfoList(string(data))
+
+	selectedUserIndex := 0
+	for index, element := range userInfoList {
+		if element["userId"] == accountId {
+			selectedUserIndex = index
+		}
+	}
+
+	tweetAccount := userInfoList[selectedUserIndex]
+
+	err = doTweet(tweetAccount, context.Args().Get(0))
+	util.Check(err)
 
 	return nil
 }
@@ -51,7 +67,7 @@ func doTweet(tweetAccount map[string]string, tweetContents string) error {
 	api := anaconda.NewTwitterApi(tweetAccount["accessToken"], tweetAccount["accessSecret"])
 
 	tweet, err := api.PostTweet(tweetContents, nil)
-	fmt.Print("[Tweet Successed] ")
+	fmt.Print("[Tweet by " + tweetAccount["userId"] + " Successed] ")
 	fmt.Println(tweet.Text)
 
 	if err != nil {

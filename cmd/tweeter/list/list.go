@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Display registered user ids.
+// Display registered account ids.
 func List(_ *cli.Context) error {
 
 	userInfoList := util.GetUserInfoList()

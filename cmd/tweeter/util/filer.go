@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var accountListFilePath = "/tmp/tweeter/user_account.csv"
+var accountListFilePath = "/tmp/tweeter/accounts.csv"
 
 // Call this method then arguments data push to csv file.
 func Push(accountName, accountToken, accountSecret string) error {

@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/user"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/account"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/tweet"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/list"
 )
@@ -20,10 +20,10 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name:    "user",
-			Aliases: []string{"u"},
+			Name:    "account",
+			Aliases: []string{"a"},
 			Usage:   "Register twitter account information",
-			Action:  user.User,
+			Action:  account.Account,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name: "delete, d",

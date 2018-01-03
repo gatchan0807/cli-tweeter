@@ -40,14 +40,14 @@ func FindUserIndex(userId string) int {
 
 // Get user information list from csv file.
 func GetUserInfoList() []map[string]string {
-	var accountListFilePath = "/tmp/tweeter/user_account.csv"
+	var accountListFilePath = "/tmp/tweeter/accounts.csv"
 
 	var result []map[string]string
 
 	rawData, err := ioutil.ReadFile(accountListFilePath)
 	if err != nil {
-		log.Fatalf("ユーザー情報が見つかりませんでした。")
-		log.Fatalf("(User account was not found.)")
+		log.Fatalf("アカウント情報が見つかりませんでした。")
+		log.Fatalf("(Account was not found.)")
 		return nil
 	}
 

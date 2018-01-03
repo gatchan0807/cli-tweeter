@@ -1,4 +1,4 @@
-package user
+package account
 
 import (
 	"fmt"
@@ -12,13 +12,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-var accountListFilePath = "/tmp/tweeter/user_account.csv"
+var accountListFilePath = "/tmp/tweeter/accounts.csv"
 
 // This method is for register Twitter account.
-// You call this method, then start user account authentication with interpreter.
+// You call this method, then start account authentication with interpreter.
 // And this to open browser for displaying Twitter OAuth PIN number.
-// This method create a csv file at `/tmp/tweeter` directory to save user information.
-func User(context *cli.Context) error {
+// This method create a csv file at `/tmp/tweeter` directory to save account information.
+func Account(context *cli.Context) error {
 	if context.Bool("delete") {
 		err := userDelete()
 		util.Check(err)
@@ -31,7 +31,7 @@ func User(context *cli.Context) error {
 }
 
 func userRegister() error {
-	// check user id file
+	// check account id file
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)
 		_, err := os.Create(accountListFilePath)
@@ -47,7 +47,7 @@ func userRegister() error {
 	userAccountToken, userAccountSecret, userID := getTwitterToken()
 	if inputUserId != userID {
 		fmt.Println("入力されたIDと認証許可したIDが一致しませんでした。")
-		fmt.Println("(Didn't match input the user ID and user ID authenticated.)")
+		fmt.Println("(Didn't match input the account ID and account ID authenticated.)")
 	}
 
 	err := util.Push(userID, userAccountToken, userAccountSecret)
@@ -58,13 +58,13 @@ func userRegister() error {
 
 func userDelete() error {
 	var userAccountName string
-	fmt.Println("削除したいユーザーIDを入力してください")
-	fmt.Println("(Please enter user ID you want to delete from the list of users.)")
+	fmt.Println("削除したいアカウントIDを入力してください")
+	fmt.Println("(Please enter account ID you want to delete from the list of accounts.)")
 	fmt.Scan(&userAccountName)
 
 	userInfoIndex := util.FindUserIndex(userAccountName)
 	if userInfoIndex == -1 {
-		return errors.New("User info not found.")
+		return errors.New("Account info not found.")
 	}
 
 	userInfoList := util.GetUserInfoList()
@@ -83,7 +83,7 @@ func userDelete() error {
 	util.Check(err)
 	if err == nil {
 		fmt.Println("削除完了しました。")
-		fmt.Println("(User information has deleted.)")
+		fmt.Println("(Account information has deleted.)")
 	}
 
 	return nil

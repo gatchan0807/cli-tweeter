@@ -12,9 +12,9 @@ import (
 func main() {
 	app := cli.NewApp()
 
-	app.Name = "cli tweeter"
-	app.Usage = "first, register twitter account. second, let's tweet!"
-	app.Version = "0.0.1"
+	app.Name = "CLI Tweeter"
+	app.Usage = "First, register twitter account. second, Let's tweet!"
+	app.Version = "1.0.0"
 
 	app.Action = tweet.Tweet
 

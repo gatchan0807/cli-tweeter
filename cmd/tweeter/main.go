@@ -24,6 +24,11 @@ func main() {
 			Aliases: []string{"r"},
 			Usage:   "Register twitter account info.",
 			Action:  register.Register,
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					Name: "delete, d",
+				},
+			},
 		},
 		{
 			Name:    "tweet",

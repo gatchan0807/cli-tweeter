@@ -21,7 +21,7 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:    "user",
-			Aliases: []string{"users"},
+			Aliases: []string{"u"},
 			Usage:   "Register twitter account information",
 			Action:  user.User,
 			Flags: []cli.Flag{

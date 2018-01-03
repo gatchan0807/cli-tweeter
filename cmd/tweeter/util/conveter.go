@@ -3,6 +3,7 @@ package util
 import (
 	"strings"
 	"io/ioutil"
+	"log"
 )
 
 func GetUserInfoList() []map[string]string {
@@ -11,7 +12,11 @@ func GetUserInfoList() []map[string]string {
 	var result []map[string]string
 
 	rawData, err := ioutil.ReadFile(accountListFilePath)
-	Check(err)
+	if err != nil {
+		log.Fatalf("ユーザー情報が見つかりませんでした。")
+		log.Fatalf("(User account was not found.)")
+		return nil
+	}
 
 	perLine := strings.Split(string(rawData), "\n")
 	perLine = perLine[:len(perLine)-1] // 末尾削除

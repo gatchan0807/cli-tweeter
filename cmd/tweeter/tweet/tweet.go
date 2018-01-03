@@ -3,6 +3,7 @@ package tweet
 import (
 	"os"
 	"fmt"
+	"log"
 
 	"github.com/urfave/cli"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
@@ -13,6 +14,12 @@ import (
 // All tweet request are sent to this method.
 // If request has account flag then request is forwarded tweetWithAccount method.
 func Tweet(context *cli.Context) error {
+	if context.Args().Get(0) == "" {
+		log.Fatalf("ツイート内容が存在しませんでした。半角スペース区切りでツイートする内容を入力してください。")
+		log.Fatalf("Tweet content does not exist. Please enter your tweet separated by spaces.")
+		return nil
+	}
+
 	selectedAccountIndex := 0
 	if context.String("account") != "" {
 		selectedAccountIndex = searchAccount(context.String("account"))

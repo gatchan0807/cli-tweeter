@@ -1,14 +1,16 @@
-package filer
+package util
 
 import (
 	"os"
 	"fmt"
-	"github.com/pkg/errors"
 	"io/ioutil"
+
+	"github.com/pkg/errors"
 )
 
 var accountListFilePath = "/tmp/tweeter/user_account.csv"
 
+// Call this method then arguments data push to csv file.
 func Push(accountName, accountToken, accountSecret string) error {
 	file, err := os.OpenFile(accountListFilePath, os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
@@ -21,6 +23,7 @@ func Push(accountName, accountToken, accountSecret string) error {
 	return nil
 }
 
+// Replace data in csv file by arguments map.
 func Replace(informationList []map[string]string) error {
 	text := ""
 	for _, element := range informationList {

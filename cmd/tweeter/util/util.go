@@ -1,11 +1,44 @@
 package util
 
 import (
-	"strings"
-	"io/ioutil"
 	"log"
+	"io/ioutil"
+	"strings"
 )
 
+// Error check method.
+func Check(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// Find user information from user list.
+func FindUserInfo(userId string) map[string]string {
+	userInfoList := GetUserInfoList()
+
+	for _, element := range userInfoList {
+		if element["userId"] == userId {
+			return element
+		}
+	}
+	return nil
+}
+
+// Find user index in user list.
+func FindUserIndex(userId string) int {
+	userInfoList := GetUserInfoList()
+
+	for index, element := range userInfoList {
+		if element["userId"] == userId {
+			return index
+		}
+	}
+
+	return -1
+}
+
+// Get user information list from csv file.
 func GetUserInfoList() []map[string]string {
 	var accountListFilePath = "/tmp/tweeter/user_account.csv"
 

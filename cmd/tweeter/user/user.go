@@ -1,4 +1,4 @@
-package register
+package user
 
 import (
 	"fmt"
@@ -10,7 +10,6 @@ import (
 	"github.com/skratchdot/open-golang/open"
 	"github.com/urfave/cli"
 	"github.com/pkg/errors"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/filer"
 )
 
 var accountListFilePath = "/tmp/tweeter/user_account.csv"
@@ -19,13 +18,19 @@ var accountListFilePath = "/tmp/tweeter/user_account.csv"
 // You call this method, then start user account authentication with interpreter.
 // And this to open browser for displaying Twitter OAuth PIN number.
 // This method create a csv file at `/tmp/tweeter` directory to save user information.
-func Register(context *cli.Context) error {
+func User(context *cli.Context) error {
 	if context.Bool("delete") {
 		err := userDelete()
 		util.Check(err)
 		return nil
+	} else {
+		err := userRegister()
+		util.Check(err)
+		return nil
 	}
+}
 
+func userRegister() error {
 	// check user id file
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)
@@ -45,7 +50,7 @@ func Register(context *cli.Context) error {
 		fmt.Println("(Didn't match input the user ID and user ID authenticated.)")
 	}
 
-	err := filer.Push(userID, userAccountToken, userAccountSecret)
+	err := util.Push(userID, userAccountToken, userAccountSecret)
 	util.Check(err)
 
 	return nil
@@ -74,7 +79,7 @@ func userDelete() error {
 		}
 	}
 
-	err := filer.Replace(result)
+	err := util.Replace(result)
 	util.Check(err)
 	if err == nil {
 		fmt.Println("削除完了しました。")

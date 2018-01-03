@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/register"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/user"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/tweet"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/list"
 )
@@ -20,10 +20,10 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name:    "register",
-			Aliases: []string{"r"},
-			Usage:   "Register twitter account info.",
-			Action:  register.Register,
+			Name:    "user",
+			Aliases: []string{"users"},
+			Usage:   "Register twitter account information",
+			Action:  user.User,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name: "delete, d",
@@ -33,7 +33,7 @@ func main() {
 		{
 			Name:    "tweet",
 			Aliases: []string{"t"},
-			Usage:   "Tweet a contents",
+			Usage:   "Do tweet",
 			Action:  tweet.Tweet,
 			Flags: []cli.Flag{
 				cli.StringFlag{
@@ -44,7 +44,7 @@ func main() {
 		{
 			Name:    "list",
 			Aliases: []string{"l"},
-			Usage:   "List accounts information",
+			Usage:   "List up registered accounts",
 			Action:  list.List,
 		},
 	}

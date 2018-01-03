@@ -1,11 +1,12 @@
 package tweet
 
 import (
+	"os"
+	"fmt"
+
 	"github.com/urfave/cli"
 	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
 	"github.com/ChimeraCoder/anaconda"
-	"os"
-	"fmt"
 )
 
 // This method needs for a tweet content to Twitter REST API.

@@ -4,6 +4,18 @@
 go get github.com/ahaha0807/cli-tweeter/cmd/tweeter
 ```
 
+# Usage
+
+```
+tweeter account # アカウント登録 (Account register)
+tweeter account -d # アカウント削除 (Delete registered account)
+
+tweeter list # 登録されているアカウントの一覧表示 (Display registered accounts)
+
+tweeter "[Tweet contents]" # ツイートする (Tweet)
+tweeter tweet --account [user id] "[Tweet contents]" # アカウント指定でツイートする (Tweet by specified account)
+```
+
 # Preparation
 （サーバー作って公開してそこにアクセスしてもらうやり方にしても良かったのですが、めんどくさかったので、）
 
@@ -17,18 +29,6 @@ Before use this tool, Please get Consumer key(API key) and Consumer secret(API s
 ```
 export TWITTER_CLI_CONSUMER_KEY=[Consumer Key(API Key)] >> ~/.bash_profile # or .your_profile
 export TWITTER_CLI_CONSUMER_SECRET_KEY=[Consumer Secret(API Secret)] >> ~/.bash_profile # or .your_profile
-```
-
-# Usage
-
-```
-tweeter account # アカウント登録 (Account register)
-tweeter account -d # アカウント削除 (Delete registered account)
-
-tweeter list # 登録されているアカウントの一覧表示 (Display registered accounts)
-
-tweeter "[Tweet contents]" # ツイートする (Tweet)
-tweeter tweet --account [user id] "[Tweet contents]" # アカウント指定でツイートする (Tweet by specified account)
 ```
 
 # Specifications

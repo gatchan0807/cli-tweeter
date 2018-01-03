@@ -5,7 +5,7 @@ import (
 	"os"
 	"log"
 
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
+	"github.com/ahaha0807/cli-tweeter/util"
 	"github.com/mrjones/oauth"
 	"github.com/skratchdot/open-golang/open"
 	"github.com/urfave/cli"

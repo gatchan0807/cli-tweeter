@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/urfave/cli"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/util"
+	"github.com/ahaha0807/cli-tweeter/util"
 	"github.com/ChimeraCoder/anaconda"
 )
 

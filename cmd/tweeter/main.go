@@ -4,9 +4,9 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/account"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/tweet"
-	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/list"
+	"github.com/ahaha0807/cli-tweeter/account"
+	"github.com/ahaha0807/cli-tweeter/tweet"
+	"github.com/ahaha0807/cli-tweeter/list"
 )
 
 func main() {

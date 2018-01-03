@@ -1,3 +1,9 @@
+# Install
+
+```bash
+go get github.com/ahaha0807/cli-tweeter/cmd/tweeter
+```
+
 # Preparation
 （サーバー作って公開してそこにアクセスしてもらうやり方にしても良かったのですが、めんどくさかったので、）
 
@@ -11,12 +17,6 @@ Before use this tool, Please get Consumer key(API key) and Consumer secret(API s
 ```
 export TWITTER_CLI_CONSUMER_KEY=[Consumer Key(API Key)] >> ~/.bash_profile # or .your_profile
 export TWITTER_CLI_CONSUMER_SECRET_KEY=[Consumer Secret(API Secret)] >> ~/.bash_profile # or .your_profile
-```
-
-# Install
-
-```bash
-go get github.com/ahaha0807/cli-tweeter/cmd/tweeter
 ```
 
 # Usage

@@ -10,7 +10,7 @@ func Check(err error) {
 	}
 }
 
-func FindUserId(userId string) map[string]string {
+func FindUserInfo(userId string) map[string]string {
 	userInfoList := GetUserInfoList()
 
 	for _, element := range userInfoList {
@@ -19,4 +19,16 @@ func FindUserId(userId string) map[string]string {
 		}
 	}
 	return nil
+}
+
+func FindUserIndex(userId string) int {
+	userInfoList := GetUserInfoList()
+
+	for index, element := range userInfoList {
+		if element["userId"] == userId {
+			return index
+		}
+	}
+
+	return -1
 }

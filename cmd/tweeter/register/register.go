@@ -9,6 +9,8 @@ import (
 	"github.com/mrjones/oauth"
 	"github.com/skratchdot/open-golang/open"
 	"github.com/urfave/cli"
+	"github.com/pkg/errors"
+	"github.com/ahaha0807/cli-tweeter/cmd/tweeter/filer"
 )
 
 var accountListFilePath = "/tmp/tweeter/user_account.csv"
@@ -17,7 +19,13 @@ var accountListFilePath = "/tmp/tweeter/user_account.csv"
 // You call this method, then start user account authentication with interpreter.
 // And this to open browser for displaying Twitter OAuth PIN number.
 // This method create a csv file at `/tmp/tweeter` directory to save user information.
-func Register(_ *cli.Context) error {
+func Register(context *cli.Context) error {
+	if context.Bool("delete") {
+		err := userDelete()
+		util.Check(err)
+		return nil
+	}
+
 	// check user id file
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
 		os.Mkdir("/tmp/tweeter", os.ModePerm)
@@ -37,10 +45,40 @@ func Register(_ *cli.Context) error {
 		fmt.Println("(Didn't match input the user ID and user ID authenticated.)")
 	}
 
-	success := addToCsvFile(userID, userAccountToken, userAccountSecret)
-	if !success {
-		fmt.Println("保存失敗しました。")
-		fmt.Println("(Save failed)")
+	err := filer.Push(userID, userAccountToken, userAccountSecret)
+	util.Check(err)
+
+	return nil
+}
+
+func userDelete() error {
+	var userAccountName string
+	fmt.Println("削除したいユーザーIDを入力してください")
+	fmt.Println("(Please enter user ID you want to delete from the list of users.)")
+	fmt.Scan(&userAccountName)
+
+	userInfoIndex := util.FindUserIndex(userAccountName)
+	if userInfoIndex == -1 {
+		return errors.New("User info not found.")
+	}
+
+	userInfoList := util.GetUserInfoList()
+	if len(userInfoList) == 0 {
+		return nil
+	}
+
+	var result []map[string]string
+	for index, element := range userInfoList {
+		if index != userInfoIndex {
+			result = append(result, element)
+		}
+	}
+
+	err := filer.Replace(result)
+	util.Check(err)
+	if err == nil {
+		fmt.Println("削除完了しました。")
+		fmt.Println("(User information has deleted.)")
 	}
 
 	return nil
@@ -48,11 +86,11 @@ func Register(_ *cli.Context) error {
 
 func requestUserId() string {
 	var userAccountName string
-	fmt.Println("@無しで登録したいTwitterIDを入力してください。")
+	fmt.Println("登録したいTwitterIDを@無しで入力してください。")
 	fmt.Println("(Input your twitter account ID.(without '@'))")
 	fmt.Scan(&userAccountName)
 
-	for util.FindUserId(userAccountName) != nil {
+	for util.FindUserInfo(userAccountName) != nil {
 		fmt.Println(userAccountName + "はすでに登録されています")
 		fmt.Println("(" + userAccountName + " is already exist.)")
 		fmt.Println("@無しで登録したいTwitterIDを入力してください。登録をキャンセルする場合は ':q' を入力してください。")
@@ -100,16 +138,4 @@ func getTwitterToken() (token, secret, userID string) {
 	secret = accessToken.Secret
 
 	return token, secret, userID
-}
-
-func addToCsvFile(accountName, accountToken, accountSecret string) bool {
-	file, err := os.OpenFile(accountListFilePath, os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		return false
-	}
-
-	writeLine := accountName + "," + accountToken + "," + accountSecret + "\n"
-	fmt.Fprint(file, writeLine)
-
-	return true
 }

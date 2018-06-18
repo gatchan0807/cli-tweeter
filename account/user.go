@@ -12,12 +12,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-var accountListFilePath = "/tmp/tweeter/accounts.csv"
+var homeDirectory = os.Getenv("HOME")
+var accountListFilePath = homeDirectory + "/.tweeter/accounts.csv"
 
 // This method is for register Twitter account.
 // You call this method, then start account authentication with interpreter.
 // And this to open browser for displaying Twitter OAuth PIN number.
-// This method create a csv file at `/tmp/tweeter` directory to save account information.
+// This method create a csv file at `/usr/local/tweeter` directory to save account information.
 func Account(context *cli.Context) error {
 	if context.Bool("delete") {
 		err := userDelete()
@@ -33,7 +34,8 @@ func Account(context *cli.Context) error {
 func userRegister() error {
 	// check account id file
 	if _, err := os.Stat(accountListFilePath); os.IsNotExist(err) {
-		os.Mkdir("/tmp/tweeter", os.ModePerm)
+		homeDirectory := os.Getenv("HOME")
+		os.Mkdir( homeDirectory + "/.tweeter", os.ModePerm)
 		_, err := os.Create(accountListFilePath)
 		util.Check(err)
 	}

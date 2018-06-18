@@ -4,6 +4,7 @@ import (
 	"log"
 	"io/ioutil"
 	"strings"
+	"os"
 )
 
 // Error check method.
@@ -40,7 +41,8 @@ func FindUserIndex(userId string) int {
 
 // Get user information list from csv file.
 func GetUserInfoList() []map[string]string {
-	var accountListFilePath = "/tmp/tweeter/accounts.csv"
+	var homeDirectory = os.Getenv("HOME")
+	var accountListFilePath = homeDirectory + "/.tweeter/accounts.csv"
 
 	var result []map[string]string
 

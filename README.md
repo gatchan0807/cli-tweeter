@@ -1,7 +1,7 @@
 # Install
 
 ```bash
-go get github.com/ahaha0807/cli-tweeter/cmd/tweeter
+go get github.com/gatchan0807/cli-tweeter/cmd/tweeter
 ```
 
 # Usage
